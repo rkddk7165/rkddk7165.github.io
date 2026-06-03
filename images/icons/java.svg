@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Java">
+  <defs>
+    <linearGradient id="steam" x1="23" y1="5" x2="39" y2="43" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f58219"/>
+      <stop offset="1" stop-color="#d9411e"/>
+    </linearGradient>
+  </defs>
+  <path d="M32 7c-5 5 4 8 0 13-3 4-9 7-4 13" fill="none" stroke="url(#steam)" stroke-width="5" stroke-linecap="round"/>
+  <path d="M42 10c-6 4-1 8-7 12" fill="none" stroke="#f58219" stroke-width="4" stroke-linecap="round"/>
+  <path d="M17 35h25c4 0 7 3 7 7s-4 10-17 10-17-6-17-10c0-2 1-5 2-7Z" fill="#fff" stroke="#2f6db3" stroke-width="4" stroke-linejoin="round"/>
+  <path d="M49 39h4c3 0 5 2 5 5s-3 6-9 6" fill="none" stroke="#2f6db3" stroke-width="4" stroke-linecap="round"/>
+  <path d="M19 55c8 4 25 3 33-1" fill="none" stroke="#2f6db3" stroke-width="4" stroke-linecap="round"/>
+</svg>
