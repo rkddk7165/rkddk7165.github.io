@@ -87,3 +87,8 @@ h1,h2,h3,h4{line-height:1.16;letter-spacing:-.03em;font-weight:700}.grad-text{ba
 .main-badge{align-self:flex-start;margin-bottom:8px;padding:5px 9px;border-radius:999px;background:#effaf4;border:1px solid #bdebd1;color:#0a7d55;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em}
 .work-main:hover{transform:translateY(-8px)}
 @media(max-width:880px){.work-main{transform:none}.work-main:hover{transform:translateY(-4px)}}
+
+.tech-pill.tech-lang{display:inline-flex;align-items:center;gap:6px;padding:4px 9px 4px 5px}
+.lang-ic{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex:none;font-family:var(--mono);font-size:9px;font-weight:800;line-height:1}
+.lang-ic.java{background:#fff1e8;border:1px solid #ffd1b3;color:#d85a1d}
+.lang-ic.sql{background:#eef6ff;border:1px solid #c8e8fa;color:var(--sky-700)}
