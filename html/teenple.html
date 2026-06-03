@@ -4,84 +4,150 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>TeenPle · 강현민</title>
-<meta name="description" content="TeenPle 백엔드 성능 개선 사례">
+<meta name="description" content="TeenPle 서비스 구현과 성능 개선 사례">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://cdn.jsdelivr.net">
 <link rel="stylesheet" href="../css/styles.css">
 </head>
-<body>
-<section class="page-hero">
-  <div class="wrap detail-hero-grid">
-    <div class="detail-title">
-      <div class="crumb"><a href="../index.html#projects">Projects</a> / TeenPle</div>
-      <span class="eyebrow reveal">MAIN PROJECT</span>
-      <h1 class="reveal d1">Teen<span class="grad-text">Ple</span></h1>
-      <p class="lead reveal d2">고등학생을 대상으로 학교 인증 기반 익명 커뮤니티 서비스를 개발했습니다. 사용자 인증/권한, 게시글, 댓글, 반응, 알림, 채팅, 신고/제재 등 핵심 도메인을 설계하고 REST API를 구현했습니다.</p>
+<body data-no-footer>
+
+<section class="t-hero" id="top" data-screen-label="TeenPle · 소개">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <span class="live reveal"><i></i>FULL-STACK SERVICE PROJECT</span>
+      <h1 class="reveal d1">Teen<span>Ple</span></h1>
+      <p class="lead reveal d2">고등학생이 <b>학교 인증</b> 후 익명으로 소통하는 커뮤니티 서비스입니다. 저는 백엔드 개발자이지만 이 프로젝트에서는 <b>Flutter 프론트엔드와 Java·Spring 백엔드</b>를 모두 다루며 화면, API, 데이터 흐름을 함께 연결했습니다.</p>
       <div class="meta reveal d3">
-        <div class="m"><div class="k">Period</div><div class="v">2025.10 — 진행 중</div></div>
-        <div class="m"><div class="k">Team</div><div class="v">4명</div></div>
-        <div class="m"><div class="k">Role</div><div class="v">Backend</div></div>
+        <div class="m"><div class="k">Team</div><div class="v">4명 팀 프로젝트</div></div>
+        <div class="m"><div class="k">Role</div><div class="v">FE · BE 구현</div></div>
+        <div class="m"><div class="k">Focus</div><div class="v">서비스 흐름 · 성능 개선</div></div>
       </div>
-      <div class="hh-cta reveal d4">
-        <a class="btn btn-primary" href="https://github.com/SchoolHubU/BE" target="_blank" rel="noopener">Backend Repo</a>
-        <a class="btn btn-ghost" href="https://github.com/rkddk7165" target="_blank" rel="noopener">GitHub</a>
+      <div class="repo-row reveal d3">
+        <a class="btn btn-primary btn-sm" href="https://github.com/TeenPle/FE" target="_blank" rel="noopener">Frontend Repo</a>
+        <a class="btn btn-ghost btn-sm" href="https://github.com/SchoolHubU/BE" target="_blank" rel="noopener">Backend Repo</a>
       </div>
     </div>
+
     <div class="hero-art reveal d2">
-      <img src="../images/teenple_landing.png" alt="TeenPle 소개 이미지">
+      <div class="product-stage">
+        <div class="visual-pair">
+          <div class="service-shot"><img src="../images/teenple1.png" alt="TeenPle 앱 화면"></div>
+          <div class="poster-shot"><img src="../images/teenple_poster.png" alt="TeenPle 서비스 포스터"></div>
+        </div>
+        <div class="stage-notes">
+          <div class="detail-card"><b>학교 인증 기반</b><span>학생 단위 접근 흐름과 커뮤니티 진입 구조 설계</span></div>
+          <div class="detail-card"><b>FE · BE 연결</b><span>Flutter 화면과 Spring API를 하나의 사용자 흐름으로 구현</span></div>
+          <div class="detail-card"><b>성능 개선</b><span>조회수 병목과 검색 API를 수치 기반으로 분석</span></div>
+        </div>
+      </div>
+      <span class="float-chip school"><i></i>School Verified</span>
+      <span class="float-chip chat"><i></i>Anonymous Community</span>
+      <span class="float-chip ops"><i></i>Spring API</span>
     </div>
   </div>
 </section>
 
-<section class="detail-sec tint">
+<section class="t-sec tint" data-screen-label="역할 · 구현 범위">
   <div class="wrap sec-grid">
     <div class="sec-copy reveal">
-      <span class="eyebrow">TROUBLESHOOTING</span>
-      <h2>트래픽이 몰리는 지점을 요청당 DB write에서 분리했습니다</h2>
-      <p>Hot 게시글 조회 시 동일 postId에 요청이 집중되면 DB update 경합으로 p95 지연이 초 단위로 증가했습니다. Atomic Update, 비관/낙관 락을 비교한 뒤, 요청당 DB write를 제거하는 Caffeine 기반 Write-Behind 구조로 전환했습니다.</p>
+      <span class="eyebrow">PROJECT SCOPE</span>
+      <h2>화면부터 서버까지<br>서비스 흐름을 직접 연결했습니다</h2>
+      <p>TeenPle은 단순히 백엔드 API만 구현한 프로젝트가 아닙니다. Flutter 화면에서 사용자가 겪는 흐름을 보고, 그 흐름에 맞춰 인증, 게시글, 댓글, 반응, 채팅, 알림, 신고/제재 API를 설계했습니다. FE를 바이브 코딩으로 구현했더라도, 결과적으로 <b>클라이언트 요구와 서버 구조를 함께 이해한 경험</b>이 강점입니다.</p>
+      <div class="flow-ops">
+        <div class="op"><b>화면</b><span>Flutter</span></div>
+        <div class="op"><b>API</b><span>Spring</span></div>
+        <div class="op"><b>Data</b><span>MySQL</span></div>
+        <div class="op"><b>Realtime</b><span>WebSocket</span></div>
+        <div class="op"><b>Push</b><span>Firebase</span></div>
+      </div>
     </div>
-    <div class="metric-list">
-      <article class="metric-card reveal d1"><span class="ico">01</span><div><div class="label">View Count</div><h3>64 req/s → 453~483 req/s</h3><p>처리량 약 6.0~7.6배 증가. p95 지연은 2.27s에서 0.45~0.59s로 개선했습니다.</p></div></article>
-      <article class="metric-card reveal d2"><span class="ico">02</span><div><div class="label">Search</div><h3>LIKE → FullText → OpenSearch</h3><p>2만 건, 매칭 6천 건 기준 후보 탐색을 약 200ms에서 OpenSearch 11~30ms 수준까지 검증했습니다.</p></div></article>
-      <article class="metric-card reveal d3"><span class="ico">03</span><div><div class="label">List Query</div><h3>23 queries → 2 queries</h3><p>댓글 수 집계 N+1을 2-Phase 조회로 재설계해 API 1회 호출당 쿼리 수를 상수화했습니다.</p></div></article>
+    <div class="scope-list">
+      <div class="scope reveal d1">
+        <span class="ico">FE</span>
+        <div><div class="label">Frontend</div><h3>Flutter 모바일 화면</h3><p>랜딩, 인증, 게시판, 게시글 상세, 댓글, 채팅, 급식, 시간표, 마이페이지 화면을 API 흐름에 맞춰 구성했습니다.</p><div class="stack-row"><span>Flutter</span><span>Dart</span><span>Dio</span><span>Riverpod</span></div></div>
+      </div>
+      <div class="scope reveal d2">
+        <span class="ico">BE</span>
+        <div><div class="label">Backend</div><h3>Java · Spring API</h3><p>사용자 인증/권한, 학교 인증, 익명 게시글, 댓글, 반응, 알림, 채팅, 신고/제재 도메인을 설계하고 REST API를 구현했습니다.</p><div class="stack-row"><span>Spring Boot</span><span>Spring Security</span><span>JPA</span><span>MySQL</span></div></div>
+      </div>
+      <div class="scope reveal d3">
+        <span class="ico">PERF</span>
+        <div><div class="label">Troubleshooting</div><h3>조회수와 검색 API 성능 개선</h3><p>Hot 게시글 조회수 병목과 게시글 검색 API 성능 문제를 재현하고, 구조 변경과 검색 엔진 PoC로 개선 방향을 검증했습니다.</p><div class="stack-row"><span>Caffeine</span><span>k6</span><span>FullText</span><span>OpenSearch</span></div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<section class="detail-sec">
-  <div class="wrap">
-    <div class="block-head reveal">
-      <div><span class="eyebrow">RESULT</span><h2>성능 개선 요약</h2></div>
-      <p class="h-sub">이력서와 포트폴리오에 정리한 수치 기반 개선 결과입니다.</p>
-    </div>
-    <div class="stat-grid">
-      <div class="stat reveal d1"><div class="num"><span data-count data-to="7.6" data-dec="1" data-suf="x">0</span></div><div class="lab">조회수 처리량</div><div class="sub">최대 개선 배율</div></div>
-      <div class="stat reveal d2"><div class="num"><span data-count data-to="80" data-suf="%">0</span></div><div class="lab">p95 지연 감소</div><div class="sub">Write-Behind 적용</div></div>
-      <div class="stat reveal d3"><div class="num"><span data-count data-to="92" data-suf="%">0</span></div><div class="lab">검색 후보 탐색 감소</div><div class="sub">OpenSearch PoC</div></div>
-      <div class="stat reveal d4"><div class="num"><span data-count data-to="91" data-suf="%">0</span></div><div class="lab">쿼리 수 감소</div><div class="sub">목록 조회 구조 개선</div></div>
-    </div>
-  </div>
-</section>
-
-<section class="detail-sec tint">
+<section class="t-sec" data-screen-label="아키텍처">
   <div class="wrap sec-grid">
     <div class="sec-copy reveal">
       <span class="eyebrow">ARCHITECTURE</span>
-      <h2>운영을 가정한 백엔드 구조</h2>
-      <p>Spring Boot, MySQL, Redis, S3, Firebase, WebSocket 기반으로 인증, 커뮤니티, 알림, 채팅, 관리자 기능을 구성했습니다. 단순 기능 구현보다 병목 지점과 운영 트레이드오프를 함께 고려했습니다.</p>
+      <h2>모바일 앱과 Spring 서버를 중심으로 한 서비스 구조</h2>
+      <p>모바일 클라이언트 요청은 백엔드 API를 통해 인증, 사용자, 게시판, 채팅, 알림 도메인으로 연결됩니다. 데이터 저장소와 캐시, 이미지 저장 흐름을 분리해 서비스 확장과 운영을 고려했습니다.</p>
+      <div class="ops-grid">
+        <div class="ops"><b>API 중심 구조</b><p>Flutter 화면 요구사항을 Spring REST API와 DTO 모델로 연결했습니다.</p></div>
+        <div class="ops"><b>캐시와 저장소 분리</b><p>조회수 병목과 인증/세션성 데이터를 캐시 계층으로 분리할 수 있도록 설계했습니다.</p></div>
+        <div class="ops"><b>이미지 저장</b><p>학생증, 프로필, 게시글 이미지 업로드 흐름을 별도 저장소와 연결했습니다.</p></div>
+        <div class="ops"><b>실시간 기능</b><p>채팅은 WebSocket, 푸시는 Firebase 흐름을 고려해 구현했습니다.</p></div>
+      </div>
     </div>
-    <div class="ss-frame reveal d2">
-      <img src="../images/teenple_arch.png" alt="TeenPle AWS 아키텍처">
-      <div class="ss-cap">TeenPle Backend Architecture</div>
+    <div class="arch-wrap reveal d1">
+      <img src="../images/teenple-architecture.png" alt="TeenPle 아키텍처">
     </div>
   </div>
 </section>
 
-<section class="detail-sec">
-  <div class="wrap">
-    <a class="nextproj reveal" href="drone.html"><div><span>Next Project</span><h3>배달의드론</h3></div><div class="np-arrow">→</div></a>
+<section class="t-sec tint" data-screen-label="성능 개선 1">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">TROUBLESHOOTING 01</span>
+      <h2>Hot 게시글 조회 API의<br>동시성 + 성능 문제</h2>
+      <p>게시글 상세 조회 시 조회수 증가 로직에서 Hot 게시글, 즉 동일 postId에 트래픽이 집중되면 DB write 경합으로 지연이 급증했습니다. Atomic Update와 JPA 비관/낙관 락을 비교했지만, Hot row에서는 락 대기와 충돌이 병목을 더 키운다는 것을 확인했습니다.</p>
+      <p>결론은 락 튜닝이 아니라 <b>요청당 DB write 제거</b>였습니다. Caffeine 로컬 캐시에 조회수 증가량을 누적하고, 주기적으로 batch flush하는 Write-Behind 구조로 전환했습니다.</p>
+    </div>
+    <div class="perf-card reveal d1">
+      <div class="perf-head"><span>View Count Write-Behind</span><strong>request write 제거</strong></div>
+      <div class="perf-flow"><span>Request</span><i></i><span>Caffeine Counter</span><i></i><span>Batch Flush</span><i></i><span>MySQL</span></div>
+      <div class="perf-stats">
+        <div><b>64 → 453~483 req/s</b><span>처리량 약 6.0~7.6배 증가</span></div>
+        <div><b>2.27s → 0.45~0.59s</b><span>p95 지연 약 74~80% 개선</span></div>
+      </div>
+      <p>정합성만 보는 문제가 아니라 정합성과 성능을 동시에 만족해야 하는 문제로 정의했고, k6 VU 최대 200 시나리오로 성공률, 처리량, p95를 비교했습니다.</p>
+    </div>
   </div>
 </section>
+
+<section class="t-sec" data-screen-label="성능 개선 2">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">TROUBLESHOOTING 02</span>
+      <h2>게시글 검색 API<br>LIKE → FullText → OpenSearch</h2>
+      <p>기존 검색은 title/content LIKE '%keyword%' 조건으로 post 테이블 풀스캔과 대량 정렬이 발생했습니다. 2만 건 중 약 6천 건이 매칭되는 조건에서 최신순 21건만 필요했지만, 후보 생성과 정렬 비용이 크게 발생했습니다.</p>
+      <p>먼저 검색 후보 postId만 조회하고 상세 조립을 분리하는 2-Phase 구조로 병목을 분해했습니다. 이후 MySQL FullText와 OpenSearch PoC를 비교해 검색 워크로드가 커질 때의 개선 방향과 운영 트레이드오프를 검토했습니다.</p>
+    </div>
+    <div class="search-card reveal d1">
+      <div class="search-row"><span>LIKE</span><b>~200ms</b><em>풀스캔 + 대량 정렬</em></div>
+      <div class="search-row"><span>FullText</span><b>~138ms</b><em>후보 탐색 개선, 최신순 한계 존재</em></div>
+      <div class="search-row strong"><span>OpenSearch</span><b>11~30ms</b><em>후보 탐색 약 78~92% 감소</em></div>
+      <div class="tradeoff">
+        <b>도입 전 검토한 트레이드오프</b>
+        <p>MySQL과 OpenSearch 간 데이터 이중화, 인덱싱/동기화 파이프라인, 장애 시 fallback, 운영 비용을 함께 고려해 바로 도입이 아니라 PoC 기반 조건부 도입 전략을 선택했습니다.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="outro" data-screen-label="다음 프로젝트">
+  <div class="outro-main">
+    <div class="wrap">
+      <a class="nextproj reveal" href="drone.html">
+        <div class="np-l"><span>Next Project · 02</span><h3>배달의드론</h3></div>
+        <div class="np-arrow">→</div>
+      </a>
+    </div>
+  </div>
+</section>
+
 <script src="../js/site.js"></script>
 </body>
 </html>
