@@ -79,3 +79,11 @@ h1,h2,h3,h4{line-height:1.16;letter-spacing:-.03em;font-weight:700}.grad-text{ba
 .arch-section .sec-grid{grid-template-columns:.74fr 1.26fr;gap:clamp(28px,4vw,48px)}
 .arch-section .arch-wrap img{padding:34px 18px 18px;max-height:84vh}
 @media(max-width:880px){.al-row{grid-template-columns:1fr}.arch-section .sec-grid{grid-template-columns:1fr}.arch-section .arch-wrap img{max-height:none}}
+
+.work-main{border-color:var(--sky-300);box-shadow:0 26px 68px rgba(7,94,156,.16),0 6px 18px rgba(10,31,51,.05);transform:translateY(-4px)}
+.work-main::before{height:6px;background:linear-gradient(135deg,#20c997 0%,#1497d4 100%)}
+.work-main .wimg{height:166px}
+.work-main .wbody{position:relative}
+.main-badge{align-self:flex-start;margin-bottom:8px;padding:5px 9px;border-radius:999px;background:#effaf4;border:1px solid #bdebd1;color:#0a7d55;font-family:var(--mono);font-size:10px;font-weight:800;letter-spacing:.08em}
+.work-main:hover{transform:translateY(-8px)}
+@media(max-width:880px){.work-main{transform:none}.work-main:hover{transform:translateY(-4px)}}

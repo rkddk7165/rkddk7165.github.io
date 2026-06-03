@@ -16,7 +16,7 @@
       <div class="crumb"><a href="../index.html#projects">Projects</a> / 배달의드론</div>
       <span class="eyebrow reveal">TEAM PROJECT</span>
       <h1 class="reveal d1">배달의<span class="grad-text">드론</span></h1>
-      <p class="lead reveal d2">가상 드론 기반 음식 배달 웹 서비스입니다. 다중 사용자 환경에서 발생하는 주문 누락과 지연 문제를 로그 추적과 처리 흐름 분석으로 식별하고 개선했습니다.</p>
+      <p class="lead reveal d2">가상 드론 기반 음식 배달 웹 서비스입니다. 동시 주문 환경에서 발생한 주문 저장 실패, 응답 지연, 재고 차감 누락 문제를 트랜잭션 경계와 락 설계 관점에서 재현하고 개선했습니다.</p>
       <div class="meta reveal d3">
         <div class="m"><div class="k">Period</div><div class="v">2025.03 — 2025.11</div></div>
         <div class="m"><div class="k">Team</div><div class="v">4명</div></div>
@@ -33,11 +33,43 @@
     <div class="sec-copy reveal">
       <span class="eyebrow">PROBLEM</span>
       <h2>외부 통신이 트랜잭션을 길게 잡고 있었습니다</h2>
-      <p>@Transactional 내부에 외부 Python 서버 통신이 포함되어 Blocking I/O 동안 DB 커넥션을 장기 점유했습니다. 주문 요청은 DB 저장을 빠르게 끝내고, 외부 서버 전송은 BlockingQueue 기반 워커 스레드로 분리했습니다.</p>
+      <p>@Transactional 내부에 외부 Python 서버 통신이 포함되어 있었습니다. 해당 통신이 Blocking I/O로 동작하면서 트랜잭션이 불필요하게 길어졌고, DB 커넥션 점유 시간이 늘어나 동시 주문 상황에서 병목과 실패가 발생했습니다.</p>
+      <p>해결 방향은 주문 저장과 외부 전송의 책임을 분리하는 것이었습니다. 주문 요청은 DB 저장을 빠르게 완료하고, 외부 서버 전송은 BlockingQueue 기반 워커 스레드가 비동기 파이프라인에서 병렬 처리하도록 구조를 바꿨습니다.</p>
     </div>
     <div class="metric-list">
       <article class="metric-card reveal d1"><span class="ico">TX</span><div><div class="label">Transaction Boundary</div><h3>DB 저장과 외부 통신 분리</h3><p>트랜잭션 책임을 줄이고 외부 서버 지연을 비동기 파이프라인에서 흡수했습니다.</p></div></article>
       <article class="metric-card reveal d2"><span class="ico">RC</span><div><div class="label">Race Condition</div><h3>재고 차감 정합성 개선</h3><p>동시 주문 충돌을 재현하고 상품 ID 기준 락 순서를 고정해 데드락 재발을 방지했습니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">TROUBLESHOOTING 01</span>
+      <h2>주문 트랜잭션 병목을<br>처리 흐름 단위로 분해했습니다</h2>
+      <p>팀원들과 주문 처리 로그와 지표를 확인하며 요청 흐름을 쪼갰고, 트랜잭션이 열린 상태에서 외부 서버 응답을 기다리는 구간이 핵심 병목이라는 점을 확인했습니다.</p>
+      <p>DB 정합성 확보는 짧은 트랜잭션에서 끝내고, 외부 통신 지연은 큐와 워커 스레드가 흡수하게 만들어 동시 요청 상황에서도 커넥션 점유 시간이 길어지지 않도록 변경했습니다.</p>
+    </div>
+    <div class="metric-list">
+      <article class="metric-card reveal d1"><span class="ico">1</span><div><div class="label">Before</div><h3>DB 저장 + Python 통신이 하나의 트랜잭션</h3><p>외부 서버 대기 시간이 그대로 DB 커넥션 점유 시간으로 이어져 동시 요청에서 실패율과 지연이 커졌습니다.</p></div></article>
+      <article class="metric-card reveal d2"><span class="ico">2</span><div><div class="label">After</div><h3>BlockingQueue 기반 비동기 전송</h3><p>주문은 먼저 저장하고, 별도 워커가 큐에서 주문 이벤트를 꺼내 외부 Python 서버로 병렬 전송하게 분리했습니다.</p></div></article>
+      <article class="metric-card reveal d3"><span class="ico">k6</span><div><div class="label">Validation</div><h3>100명 동시 주문 시나리오 검증</h3><p>k6 기준 100명 동시 주문에서 요청이 안정적으로 처리되고, 평균 응답 시간과 성공률이 함께 개선되는지 확인했습니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec tint">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">TROUBLESHOOTING 02</span>
+      <h2>재고 차감 누락은<br>Race Condition 문제였습니다</h2>
+      <p>트래픽이 높아질 때 일부 주문 결과와 재고 상태가 불일치했습니다. 단순 로직 버그가 아니라 동일 상품 재고를 여러 트랜잭션이 동시에 갱신하면서 발생한 경쟁 조건으로 정의했습니다.</p>
+      <p>1차로 비관적 락을 적용해 정합성을 확보하려 했지만 일부 시나리오에서 데드락이 발생했습니다. 이후 데드락 원인을 락 획득 순서 불일치로 보고, 상품 ID 기준으로 락 순서를 고정해 교착 조건을 제거했습니다.</p>
+    </div>
+    <div class="metric-list">
+      <article class="metric-card reveal d1"><span class="ico">LOCK</span><div><div class="label">Pessimistic Lock</div><h3>정합성 확보 후 데드락 조건 추적</h3><p>락 자체가 목적이 아니라, 동시 주문에서 재고 차감 누락을 막으면서 교착이 생기지 않는 규칙을 찾는 데 집중했습니다.</p></div></article>
+      <article class="metric-card reveal d2"><span class="ico">SEQ</span><div><div class="label">Lock Ordering</div><h3>상품 ID 오름차순 기준 락 순서 고정</h3><p>요청마다 다른 순서로 상품 락을 잡던 구조를 정렬 규칙으로 통일해 데드락 재발 가능성을 낮췄습니다.</p></div></article>
     </div>
   </div>
 </section>
