@@ -88,7 +88,9 @@ h1,h2,h3,h4{line-height:1.16;letter-spacing:-.03em;font-weight:700}.grad-text{ba
 .work-main:hover{transform:translateY(-8px)}
 @media(max-width:880px){.work-main{transform:none}.work-main:hover{transform:translateY(-4px)}}
 
-.tech-pill.tech-lang{display:inline-flex;align-items:center;gap:6px;padding:4px 9px 4px 5px}
-.lang-ic{width:22px;height:22px;border-radius:7px;display:grid;place-items:center;flex:none;font-family:var(--mono);font-size:9px;font-weight:800;line-height:1}
-.lang-ic.java{background:#fff1e8;border:1px solid #ffd1b3;color:#d85a1d}
-.lang-ic.sql{background:#eef6ff;border:1px solid #c8e8fa;color:var(--sky-700)}
+.tech-pill{display:inline-flex;align-items:center;gap:5px}
+.tech-pill img.tlogo{width:15px;height:15px;object-fit:contain;flex:none;display:block}
+.tech-pill.aws{padding-top:3px;padding-bottom:3px}
+.tech-pill.aws img{height:17px;width:auto;object-fit:contain;flex:none;display:block}
+.fallback-logo{width:15px;height:15px;border-radius:5px;display:grid;place-items:center;flex:none;background:#111827;color:#fff;font-family:var(--mono);font-size:9px;font-weight:800;line-height:1}
+.fallback-logo.os{background:#005eb8}
