@@ -18,7 +18,7 @@
       <h1 class="reveal d1">Teen<span>Ple</span></h1>
       <p class="lead reveal d2">고등학생이 <b>학교 인증</b> 후 익명으로 소통하는 커뮤니티 서비스입니다. 저는 백엔드 개발자이지만 이 프로젝트에서는 <b>Flutter 프론트엔드와 Java·Spring 백엔드</b>를 모두 다루며 화면, API, 데이터 흐름을 함께 연결했습니다.</p>
       <div class="meta reveal d3">
-        <div class="m"><div class="k">Team</div><div class="v">4명 팀 프로젝트</div></div>
+        <div class="m"><div class="k">Team</div><div class="v">2명 팀 프로젝트</div></div>
         <div class="m"><div class="k">Role</div><div class="v">FE · BE 구현</div></div>
         <div class="m"><div class="k">Focus</div><div class="v">서비스 흐름 · 성능 개선</div></div>
       </div>
@@ -40,9 +40,6 @@
           <div class="detail-card"><b>성능 개선</b><span>조회수 병목과 검색 API를 수치 기반으로 분석</span></div>
         </div>
       </div>
-      <span class="float-chip school"><i></i>School Verified</span>
-      <span class="float-chip chat"><i></i>Anonymous Community</span>
-      <span class="float-chip ops"><i></i>Spring API</span>
     </div>
   </div>
 </section>
@@ -84,6 +81,12 @@
       <span class="eyebrow">ARCHITECTURE</span>
       <h2>모바일 앱과 Spring 서버를 중심으로 한 서비스 구조</h2>
       <p>모바일 클라이언트 요청은 백엔드 API를 통해 인증, 사용자, 게시판, 채팅, 알림 도메인으로 연결됩니다. 데이터 저장소와 캐시, 이미지 저장 흐름을 분리해 서비스 확장과 운영을 고려했습니다.</p>
+      <div class="arch-flow">
+        <div><b>1. Mobile Client</b><span>Flutter 앱에서 HTTPS API 요청과 이미지 업로드 요청이 시작됩니다.</span></div>
+        <div><b>2. ALB → Spring Boot</b><span>외부 요청은 로드밸런서를 거쳐 private subnet의 Spring Boot 서버로 전달됩니다.</span></div>
+        <div><b>3. Redis / MySQL</b><span>JWT·캐시성 데이터는 Redis, 사용자·게시판 도메인 데이터는 MySQL에 저장합니다.</span></div>
+        <div><b>4. S3 Storage</b><span>학생증, 프로필, 게시글 이미지는 S3에 분리 저장해 애플리케이션 서버 부하를 줄입니다.</span></div>
+      </div>
       <div class="ops-grid">
         <div class="ops"><b>API 중심 구조</b><p>Flutter 화면 요구사항을 Spring REST API와 DTO 모델로 연결했습니다.</p></div>
         <div class="ops"><b>캐시와 저장소 분리</b><p>조회수 병목과 인증/세션성 데이터를 캐시 계층으로 분리할 수 있도록 설계했습니다.</p></div>
@@ -113,6 +116,11 @@
         <div><b>2.27s → 0.45~0.59s</b><span>p95 지연 약 74~80% 개선</span></div>
       </div>
       <p>정합성만 보는 문제가 아니라 정합성과 성능을 동시에 만족해야 하는 문제로 정의했고, k6 VU 최대 200 시나리오로 성공률, 처리량, p95를 비교했습니다.</p>
+      <div class="blog-links">
+        <span>Related Posts</span>
+        <a href="https://velog.io/@rkddk7165/%EC%A1%B0%ED%9A%8C%EC%88%98-%EB%8F%99%EC%8B%9C%EC%84%B1%EC%97%90-%EB%8C%80%ED%95%9C-%EA%B3%A0%EC%B0%B0-InnoDB-Row-Lock-vs-JPA-%EB%B9%84%EA%B4%80%EC%A0%81%EB%82%99%EA%B4%80%EC%A0%81-%EB%9D%BD" target="_blank" rel="noopener">InnoDB Row Lock vs JPA 비관적/낙관적 락</a>
+        <a href="https://velog.io/@rkddk7165/2.-%ED%95%AB-%EA%B2%8C%EC%8B%9C%EA%B8%80-%EC%A1%B0%ED%9A%8C%EC%88%98-%EC%B5%9C%EC%A0%81%ED%99%94-%EB%A1%9C%EC%BB%AC-%EC%BA%90%EC%8B%9CCaffeine-Write-Behind%EB%A1%9C-DB-Write-%EB%B3%91%EB%AA%A9-%EC%A0%9C%EA%B1%B0" target="_blank" rel="noopener">Caffeine Write-Behind로 DB Write 병목 제거</a>
+      </div>
     </div>
   </div>
 </section>
@@ -132,6 +140,12 @@
       <div class="tradeoff">
         <b>도입 전 검토한 트레이드오프</b>
         <p>MySQL과 OpenSearch 간 데이터 이중화, 인덱싱/동기화 파이프라인, 장애 시 fallback, 운영 비용을 함께 고려해 바로 도입이 아니라 PoC 기반 조건부 도입 전략을 선택했습니다.</p>
+      </div>
+      <div class="blog-links">
+        <span>Related Posts</span>
+        <a href="https://velog.io/@rkddk7165/%EA%B2%8C%EC%8B%9C%EA%B8%80-%EA%B2%80%EC%83%89-API-%EC%84%B1%EB%8A%A5-%EA%B3%A0%EC%B0%B0" target="_blank" rel="noopener">게시글 검색 API 성능 고찰 (1)</a>
+        <a href="https://velog.io/@rkddk7165/%EA%B2%8C%EC%8B%9C%EA%B8%80-%EA%B2%80%EC%83%89-API-%EC%84%B1%EB%8A%A5-%EA%B3%A0%EC%B0%B0-2-OpenSearch-%EB%8F%84%EC%9E%85" target="_blank" rel="noopener">게시글 검색 API 성능 고찰 (2): OpenSearch 도입</a>
+        <a href="https://velog.io/@rkddk7165/%EA%B2%8C%EC%8B%9C%EA%B8%80-%EA%B2%80%EC%83%89-API-%EC%84%B1%EB%8A%A5-3" target="_blank" rel="noopener">게시글 검색 API 성능 고찰 (3)</a>
       </div>
     </div>
   </div>
