@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>배달의드론 · 강현민</title>
+<meta name="description" content="배달의드론 트랜잭션 병목 개선 사례">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<section class="page-hero">
+  <div class="wrap detail-hero-grid">
+    <div class="detail-title">
+      <div class="crumb"><a href="../index.html#projects">Projects</a> / 배달의드론</div>
+      <span class="eyebrow reveal">TEAM PROJECT</span>
+      <h1 class="reveal d1">배달의<span class="grad-text">드론</span></h1>
+      <p class="lead reveal d2">가상 드론 기반 음식 배달 웹 서비스입니다. 다중 사용자 환경에서 발생하는 주문 누락과 지연 문제를 로그 추적과 처리 흐름 분석으로 식별하고 개선했습니다.</p>
+      <div class="meta reveal d3">
+        <div class="m"><div class="k">Period</div><div class="v">2025.03 — 2025.11</div></div>
+        <div class="m"><div class="k">Team</div><div class="v">4명</div></div>
+        <div class="m"><div class="k">Stack</div><div class="v">Java · Spring · MySQL</div></div>
+      </div>
+      <a class="btn btn-primary reveal d4" href="https://github.com/rkddk7165/DroneDeliveryWeb" target="_blank" rel="noopener">GitHub Repository</a>
+    </div>
+    <div class="hero-art reveal d2"><img src="../images/drone_hero.png" alt="배달의드론 메인 이미지"></div>
+  </div>
+</section>
+
+<section class="detail-sec tint">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">PROBLEM</span>
+      <h2>외부 통신이 트랜잭션을 길게 잡고 있었습니다</h2>
+      <p>@Transactional 내부에 외부 Python 서버 통신이 포함되어 Blocking I/O 동안 DB 커넥션을 장기 점유했습니다. 주문 요청은 DB 저장을 빠르게 끝내고, 외부 서버 전송은 BlockingQueue 기반 워커 스레드로 분리했습니다.</p>
+    </div>
+    <div class="metric-list">
+      <article class="metric-card reveal d1"><span class="ico">TX</span><div><div class="label">Transaction Boundary</div><h3>DB 저장과 외부 통신 분리</h3><p>트랜잭션 책임을 줄이고 외부 서버 지연을 비동기 파이프라인에서 흡수했습니다.</p></div></article>
+      <article class="metric-card reveal d2"><span class="ico">RC</span><div><div class="label">Race Condition</div><h3>재고 차감 정합성 개선</h3><p>동시 주문 충돌을 재현하고 상품 ID 기준 락 순서를 고정해 데드락 재발을 방지했습니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec">
+  <div class="wrap">
+    <div class="block-head reveal"><div><span class="eyebrow">RESULT</span><h2>개선 결과</h2></div></div>
+    <div class="stat-grid">
+      <div class="stat reveal d1"><div class="num"><span data-count data-to="100" data-suf="%">0</span></div><div class="lab">주문 성공률</div><div class="sub">60% → 100%</div></div>
+      <div class="stat reveal d2"><div class="num"><span data-count data-to="0.4" data-dec="1" data-suf="s">0</span></div><div class="lab">평균 응답</div><div class="sub">0.7s → 0.4s</div></div>
+      <div class="stat reveal d3"><div class="num"><span data-count data-to="3" data-suf="x">0</span></div><div class="lab">TPS 향상</div><div class="sub">동시 주문 안정화</div></div>
+      <div class="stat reveal d4"><div class="num">0</div><div class="lab">Deadlock</div><div class="sub">락 순서 고정 후 재발 방지</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec tint">
+  <div class="wrap">
+    <div class="block-head reveal"><div><span class="eyebrow">SCREENS</span><h2>프로젝트 화면</h2></div></div>
+    <div class="ss-grid">
+      <div class="ss-frame reveal d1"><img src="../images/drone_home_page.png" alt="배달의드론 홈"><div class="ss-cap">Home Page</div></div>
+      <div class="ss-frame reveal d2"><img src="../images/drone_menu.png" alt="배달의드론 메뉴"><div class="ss-cap">Menu & Order Flow</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec">
+  <div class="wrap">
+    <a class="nextproj reveal" href="lms.html"><div><span>Next Project</span><h3>학사정보시스템</h3></div><div class="np-arrow">→</div></a>
+  </div>
+</section>
+<script src="../js/site.js"></script>
+</body>
+</html>

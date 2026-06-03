@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TeenPle · 강현민</title>
+<meta name="description" content="TeenPle 백엔드 성능 개선 사례">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+<section class="page-hero">
+  <div class="wrap detail-hero-grid">
+    <div class="detail-title">
+      <div class="crumb"><a href="../index.html#projects">Projects</a> / TeenPle</div>
+      <span class="eyebrow reveal">MAIN PROJECT</span>
+      <h1 class="reveal d1">Teen<span class="grad-text">Ple</span></h1>
+      <p class="lead reveal d2">고등학생을 대상으로 학교 인증 기반 익명 커뮤니티 서비스를 개발했습니다. 사용자 인증/권한, 게시글, 댓글, 반응, 알림, 채팅, 신고/제재 등 핵심 도메인을 설계하고 REST API를 구현했습니다.</p>
+      <div class="meta reveal d3">
+        <div class="m"><div class="k">Period</div><div class="v">2025.10 — 진행 중</div></div>
+        <div class="m"><div class="k">Team</div><div class="v">4명</div></div>
+        <div class="m"><div class="k">Role</div><div class="v">Backend</div></div>
+      </div>
+      <div class="hh-cta reveal d4">
+        <a class="btn btn-primary" href="https://github.com/SchoolHubU/BE" target="_blank" rel="noopener">Backend Repo</a>
+        <a class="btn btn-ghost" href="https://github.com/rkddk7165" target="_blank" rel="noopener">GitHub</a>
+      </div>
+    </div>
+    <div class="hero-art reveal d2">
+      <img src="../images/teenple_landing.png" alt="TeenPle 소개 이미지">
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec tint">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">TROUBLESHOOTING</span>
+      <h2>트래픽이 몰리는 지점을 요청당 DB write에서 분리했습니다</h2>
+      <p>Hot 게시글 조회 시 동일 postId에 요청이 집중되면 DB update 경합으로 p95 지연이 초 단위로 증가했습니다. Atomic Update, 비관/낙관 락을 비교한 뒤, 요청당 DB write를 제거하는 Caffeine 기반 Write-Behind 구조로 전환했습니다.</p>
+    </div>
+    <div class="metric-list">
+      <article class="metric-card reveal d1"><span class="ico">01</span><div><div class="label">View Count</div><h3>64 req/s → 453~483 req/s</h3><p>처리량 약 6.0~7.6배 증가. p95 지연은 2.27s에서 0.45~0.59s로 개선했습니다.</p></div></article>
+      <article class="metric-card reveal d2"><span class="ico">02</span><div><div class="label">Search</div><h3>LIKE → FullText → OpenSearch</h3><p>2만 건, 매칭 6천 건 기준 후보 탐색을 약 200ms에서 OpenSearch 11~30ms 수준까지 검증했습니다.</p></div></article>
+      <article class="metric-card reveal d3"><span class="ico">03</span><div><div class="label">List Query</div><h3>23 queries → 2 queries</h3><p>댓글 수 집계 N+1을 2-Phase 조회로 재설계해 API 1회 호출당 쿼리 수를 상수화했습니다.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec">
+  <div class="wrap">
+    <div class="block-head reveal">
+      <div><span class="eyebrow">RESULT</span><h2>성능 개선 요약</h2></div>
+      <p class="h-sub">이력서와 포트폴리오에 정리한 수치 기반 개선 결과입니다.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat reveal d1"><div class="num"><span data-count data-to="7.6" data-dec="1" data-suf="x">0</span></div><div class="lab">조회수 처리량</div><div class="sub">최대 개선 배율</div></div>
+      <div class="stat reveal d2"><div class="num"><span data-count data-to="80" data-suf="%">0</span></div><div class="lab">p95 지연 감소</div><div class="sub">Write-Behind 적용</div></div>
+      <div class="stat reveal d3"><div class="num"><span data-count data-to="92" data-suf="%">0</span></div><div class="lab">검색 후보 탐색 감소</div><div class="sub">OpenSearch PoC</div></div>
+      <div class="stat reveal d4"><div class="num"><span data-count data-to="91" data-suf="%">0</span></div><div class="lab">쿼리 수 감소</div><div class="sub">목록 조회 구조 개선</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec tint">
+  <div class="wrap sec-grid">
+    <div class="sec-copy reveal">
+      <span class="eyebrow">ARCHITECTURE</span>
+      <h2>운영을 가정한 백엔드 구조</h2>
+      <p>Spring Boot, MySQL, Redis, S3, Firebase, WebSocket 기반으로 인증, 커뮤니티, 알림, 채팅, 관리자 기능을 구성했습니다. 단순 기능 구현보다 병목 지점과 운영 트레이드오프를 함께 고려했습니다.</p>
+    </div>
+    <div class="ss-frame reveal d2">
+      <img src="../images/teenple_arch.png" alt="TeenPle AWS 아키텍처">
+      <div class="ss-cap">TeenPle Backend Architecture</div>
+    </div>
+  </div>
+</section>
+
+<section class="detail-sec">
+  <div class="wrap">
+    <a class="nextproj reveal" href="drone.html"><div><span>Next Project</span><h3>배달의드론</h3></div><div class="np-arrow">→</div></a>
+  </div>
+</section>
+<script src="../js/site.js"></script>
+</body>
+</html>
