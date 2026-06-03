@@ -1,11 +1,15 @@
-# rkddk7165.github.io
+# 강현민 포트폴리오
 
-GitHub Pages portfolio for `rkddk7165`.
+Java Spring 기반 백엔드 개발자 포트폴리오입니다.
 
-## Update
+## 반영 내용
 
-Edit these placeholders in `index.html`:
+- 강현민 개인 소개
+- Java Spring 백엔드 포지션
+- TeenPle 성능 개선 사례
+- 배달의드론, 학사정보시스템 프로젝트
+- 휠/터치/키보드 기반 섹션 단위 전환
 
-- `email@example.com`
-- role, focus, career, and project copy
-- external links such as blog or resume
+## 수정할 값
+
+`index.html`의 `email@example.com`을 실제 이메일로 교체하면 됩니다.
