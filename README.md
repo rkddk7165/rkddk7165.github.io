@@ -14,4 +14,4 @@ Java Spring 기반 백엔드 개발자 포트폴리오입니다.
 
 ## 수정할 값
 
-`email@example.com`을 실제 이메일로 교체하면 됩니다.
+이메일은 `rkddk7165@naver.com`으로 설정되어 있습니다.

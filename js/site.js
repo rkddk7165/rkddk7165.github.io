@@ -4,7 +4,7 @@
   const toHtml = inSub ? "" : "html/";
 
   const CONTACT = {
-    email: "email@example.com",
+    email: "rkddk7165@naver.com",
     github: "github.com/rkddk7165",
     blog: "velog.io/@rkddk7165/posts",
   };
